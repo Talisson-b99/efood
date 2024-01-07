@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import { Cores } from "../../styles";
 
-export const ContainerCard = styled.div`
+import { Link } from "react-router-dom";
+
+export const ContainerCard = styled(Link)`
   max-width: 472px;
   font-size: 18px;
   font-weight: bold;
   color: ${Cores.laranjaEscuro};
   border: 1px solid ${Cores.laranjaEscuro};
+  text-decoration: none;
 `
 
 export const Title = styled.h3`  

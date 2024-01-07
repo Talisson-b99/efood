@@ -12,7 +12,7 @@ import Item1 from "../../assets/item1.png";
 
 const Card = () => {
   return (
-    <ContainerCard>
+    <ContainerCard to="/details">
       <img src={Item1} alt="imagem do produto" />
       <Content>
         <HeaderCard>
