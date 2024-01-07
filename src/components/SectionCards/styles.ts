@@ -6,4 +6,5 @@ export const Container = styled.div`
   column-gap: 80px;
   row-gap: 48px;
   margin-top: 80px;
+  margin-bottom: 120px;
 `
