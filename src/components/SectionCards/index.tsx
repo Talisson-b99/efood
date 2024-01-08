@@ -1,14 +1,17 @@
+import { RestaurantsProps } from "../../pages/Home";
 import Card from "../Card";
 import { Container } from "./styles";
 
-const SectionCards = () => {
+type Props = {
+  restaurants: RestaurantsProps[];
+};
+
+const SectionCards = ({ restaurants }: Props) => {
   return (
     <Container className="container">
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      {restaurants.map((restaurant) => (
+        <Card restaurant={restaurant} />
+      ))}
     </Container>
   );
 };

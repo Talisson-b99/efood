@@ -10,6 +10,13 @@ export const ContainerCard = styled(Link)`
   color: ${Cores.laranjaEscuro};
   border: 1px solid ${Cores.laranjaEscuro};
   text-decoration: none;
+
+  img {
+    width: 100%;
+    max-height: 217px;
+    display: block;
+    object-fit: cover;
+  }
 `
 
 export const Title = styled.h3`  
@@ -18,6 +25,17 @@ export const Title = styled.h3`
 export const HeaderCard = styled.div`
   display: flex;
   justify-content: space-between;
+
+  >div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    img {
+      width: 21px;
+      height: 21px;
+    }
+  }
 `
 
 export const Content = styled.div`
