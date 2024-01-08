@@ -16,7 +16,7 @@ type Props = {
 
 const Card = ({ restaurant }: Props) => {
   return (
-    <ContainerCard to="/details">
+    <ContainerCard to={`/details/${restaurant.id}`}>
       <img src={restaurant.capa} alt="imagem do produto" />
       <Content>
         <HeaderCard>

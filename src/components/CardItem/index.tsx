@@ -1,16 +1,30 @@
 import { Button, Card, Description, Title } from "./styles";
 
-import Item1 from "../../assets/cardItem1.png";
+type Props = {
+  onclick?: () => void;
+  prato: {
+    id: number;
+    foto: string;
+    preco: number;
+    nome: string;
+    descricao: string;
+    porcao: string;
+  };
+};
 
-const CardItem = () => {
+const CardItem = ({ onclick, prato }: Props) => {
+  const getDescricao = (descricao: string) => {
+    if (descricao.length > 138) {
+      return descricao.slice(0, 135) + "...";
+    }
+    return descricao;
+  };
+
   return (
-    <Card>
-      <img src={Item1} alt="Pizza" />
-      <Title>Pizza marguerita</Title>
-      <Description>
-        A clássica Marguerita: molho de tomate suculento, mussarela derretida,
-        manjericão fresco e um toque de azeite. Sabor e simplicidade!
-      </Description>
+    <Card onClick={onclick}>
+      <img src={prato.foto} alt="Pizza" />
+      <Title>{prato.nome}</Title>
+      <Description>{getDescricao(prato.descricao)}</Description>
       <Button>Adicionar ao carrinho</Button>
     </Card>
   );

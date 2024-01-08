@@ -2,40 +2,79 @@ import BannerDetails from "../../components/BannerDetails";
 import CardItem from "../../components/CardItem";
 import { ModalContent, SectionItems, SectionModal } from "./styles";
 
-import item1 from "../../assets/cardItem1.png";
 import close from "../../assets/close.png";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+
+export type CardapioProps = {
+  id: number;
+  capa: string;
+  tipo: string;
+  titulo: string;
+  cardapio: {
+    id: number;
+    foto: string;
+    preco: number;
+    nome: string;
+    descricao: string;
+    porcao: string;
+  }[];
+};
+
+export type PratoProps = {
+  id: number;
+  foto: string;
+  preco: number;
+  nome: string;
+  descricao: string;
+  porcao: string;
+};
 
 const Details = () => {
+  const [isModalActive, setIsModalActive] = useState(false);
+  const [cardapio, setCardapio] = useState<CardapioProps>();
+  const [prato, setPrato] = useState<PratoProps>();
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
+      .then((response) => response.json())
+      .then((response) => setCardapio(response));
+  }, [id]);
+
+  console.log(cardapio);
+
+  const getPrato = (id: number) => {
+    setPrato(cardapio?.cardapio[id - 1]);
+  };
+
+  if (!cardapio) {
+    return null;
+  }
+
   return (
     <div>
-      <BannerDetails />
+      <BannerDetails restaurant={cardapio} />
       <SectionItems className="container">
-        <CardItem />
-        <CardItem />
-        <CardItem />
-        <CardItem />
-        <CardItem />
+        {cardapio?.cardapio.map((prato) => (
+          <CardItem
+            onclick={() => {
+              setIsModalActive(true), getPrato(prato.id);
+            }}
+            prato={prato}
+          />
+        ))}
       </SectionItems>
-      <SectionModal>
+      <SectionModal className={isModalActive ? "modalActive" : ""}>
         <ModalContent>
-          <img src={item1} />
+          <img src={prato?.foto} />
           <div>
-            <img src={close} />
-            <h3>Nome do prato</h3>
-            <p>
-              A pizza Margherita é uma pizza clássica da culinária italiana,
-              reconhecida por sua simplicidade e sabor inigualável. Ela é feita
-              com uma base de massa fina e crocante, coberta com molho de tomate
-              fresco, queijo mussarela de alta qualidade, manjericão fresco e
-              azeite de oliva extra-virgem. A combinação de sabores é perfeita,
-              com o molho de tomate suculento e ligeiramente ácido, o queijo
-              derretido e cremoso e as folhas de manjericão frescas, que
-              adicionam um toque de sabor herbáceo. É uma pizza simples, mas
-              deliciosa, que agrada a todos os paladares e é uma ótima opção
-              para qualquer ocasião.
-            </p>
-            <p>Serve de 2 a 3 pessoas</p>
-            <button>Adicionar ao carrinho - R$ 80,90</button>
+            <img src={close} onClick={() => setIsModalActive(false)} />
+            <h3>{prato?.nome}</h3>
+            <p>{prato?.descricao}</p>
+            <p>Serve de {prato?.porcao}</p>
+            <button>Adicionar ao carrinho - R$ {prato?.preco}</button>
           </div>
         </ModalContent>
       </SectionModal>

@@ -2,9 +2,13 @@ import { BannerImage, Header } from "./styles";
 
 import Logo from "../../assets/logo.png";
 import Background from "../../assets/fundo.png";
-import Banner1 from "../../assets/banner1.png";
+import { CardapioProps } from "../../pages/Details";
 
-const BannerDetails = () => {
+type Props = {
+  restaurant: CardapioProps;
+};
+
+const BannerDetails = ({ restaurant }: Props) => {
   return (
     <div>
       <Header style={{ backgroundImage: `url(${Background})` }}>
@@ -14,10 +18,10 @@ const BannerDetails = () => {
           <p>0 produto(s) no carrinho</p>
         </div>
       </Header>
-      <BannerImage style={{ backgroundImage: `url(${Banner1})` }}>
+      <BannerImage style={{ backgroundImage: `url(${restaurant.capa})` }}>
         <div className="container">
-          <h4>Italiana</h4>
-          <h2>La Dolce Vita Trattoria</h2>
+          <h4>{restaurant.tipo}</h4>
+          <h2>{restaurant.titulo}</h2>
         </div>
       </BannerImage>
     </div>

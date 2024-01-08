@@ -14,9 +14,13 @@ export const SectionModal = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
+
+  &.modalActive{
+    display: flex;
+  }
 
   &::after {
     position: absolute;

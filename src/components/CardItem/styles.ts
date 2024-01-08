@@ -6,6 +6,13 @@ export const Card = styled.div`
   padding: 8px;
   width: 320px;
   height: 338px;
+  position: relative;
+  cursor: pointer;
+
+  img {
+    width: 100%;
+    height: 167px;
+  }
 `
 
 export const Title = styled.h4`
@@ -19,6 +26,7 @@ export const Description = styled.p`
   font-size: 14px;
   line-height: 22px;
   color: ${Cores.samao};
+  text-align: justify;
 
 `
 
@@ -30,4 +38,10 @@ export const Button = styled.button`
   width: 100%;
   padding: 4px;
   border: none;
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 95%;
+  
 `
