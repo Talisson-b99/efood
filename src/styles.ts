@@ -20,6 +20,10 @@ export const Globalcss = createGlobalStyle`
     background-color: ${Cores.laranja};
   }
 
+  button {
+    cursor: pointer
+  }
+
   .container {
     max-width: 1024px;
     margin: 0 auto;
