@@ -1,9 +1,9 @@
-import { RestaurantsProps } from "../../pages/Home";
+import { RestaurantProps } from "../../types/restaurant";
 import Card from "../Card";
 import { Container } from "./styles";
 
 type Props = {
-  restaurants: RestaurantsProps[];
+  restaurants: RestaurantProps[];
 };
 
 const SectionCards = ({ restaurants }: Props) => {

@@ -3,23 +3,12 @@ import CardItem from "../../components/CardItem";
 import { ModalContent, SectionItems, SectionModal } from "./styles";
 
 import close from "../../assets/close.png";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-
-export type CardapioProps = {
-  id: number;
-  capa: string;
-  tipo: string;
-  titulo: string;
-  cardapio: {
-    id: number;
-    foto: string;
-    preco: number;
-    nome: string;
-    descricao: string;
-    porcao: string;
-  }[];
-};
+import { useGetRestaurantesDetailsQuery } from "../../services/api";
+import { useDispatch } from "react-redux";
+import { add, open } from "../../store/reducers/cart";
+import { CardapioItem } from "../../types/restaurant";
 
 export type PratoProps = {
   id: number;
@@ -31,34 +20,37 @@ export type PratoProps = {
 };
 
 const Details = () => {
-  const [isModalActive, setIsModalActive] = useState(false);
-  const [cardapio, setCardapio] = useState<CardapioProps>();
-  const [prato, setPrato] = useState<PratoProps>();
+  const dispatch = useDispatch();
 
   const { id } = useParams();
 
-  useEffect(() => {
-    fetch(`https://fake-api-tau.vercel.app/api/efood/restaurantes/${id}`)
-      .then((response) => response.json())
-      .then((response) => setCardapio(response));
-  }, [id]);
+  const { data: restaurate } = useGetRestaurantesDetailsQuery(id!);
 
-  console.log(cardapio);
+  const [isModalActive, setIsModalActive] = useState(false);
+
+  const [prato, setPrato] = useState<CardapioItem>();
 
   const getPrato = (id: number) => {
-    setPrato(cardapio?.cardapio[id - 1]);
+    const prato = restaurate?.cardapio.filter((item) => item.id === id);
+    setPrato(prato![0]);
   };
 
-  if (!cardapio) {
+  const handleAddToCart = (item: CardapioItem) => {
+    dispatch(add(item));
+    dispatch(open());
+  };
+
+  if (!restaurate) {
     return null;
   }
 
   return (
     <div>
-      <BannerDetails restaurant={cardapio} />
+      <BannerDetails restaurant={restaurate} />
       <SectionItems className="container">
-        {cardapio?.cardapio.map((prato) => (
+        {restaurate?.cardapio.map((prato) => (
           <CardItem
+            key={prato.id}
             onclick={() => {
               setIsModalActive(true), getPrato(prato.id);
             }}
@@ -74,7 +66,9 @@ const Details = () => {
             <h3>{prato?.nome}</h3>
             <p>{prato?.descricao}</p>
             <p>Serve de {prato?.porcao}</p>
-            <button>Adicionar ao carrinho - R$ {prato?.preco}</button>
+            <button onClick={() => handleAddToCart(prato!)}>
+              Adicionar ao carrinho - R$ {prato?.preco}
+            </button>
           </div>
         </ModalContent>
       </SectionModal>

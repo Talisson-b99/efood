@@ -1,26 +1,13 @@
-import { useEffect, useState } from "react";
 import Header from "../../components/Header";
 import SectionCards from "../../components/SectionCards";
-
-export type RestaurantsProps = {
-  id: number;
-  titulo: string;
-  destacado: boolean;
-  tipo: string;
-  avaliacao: number;
-  descricao: string;
-  capa: string;
-};
+import { useGetRestaurantesQuery } from "../../services/api";
 
 const Home = () => {
-  const [restaurants, setRestaurants] = useState<RestaurantsProps[]>([]);
+  const { data: restaurants } = useGetRestaurantesQuery();
 
-  useEffect(() => {
-    fetch("https://fake-api-tau.vercel.app/api/efood/restaurantes")
-      .then((response) => response.json())
-      .then((response) => setRestaurants(response));
-  }, []);
-  console.log(restaurants);
+  if (!restaurants) {
+    return null;
+  }
 
   return (
     <div>

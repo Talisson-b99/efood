@@ -8,10 +8,10 @@ import {
 } from "./styles";
 
 import Stars from "../../assets/estrela.png";
-import { RestaurantsProps } from "../../pages/Home";
+import { RestaurantProps } from "../../types/restaurant";
 
 type Props = {
-  restaurant: RestaurantsProps;
+  restaurant: RestaurantProps;
 };
 
 const Card = ({ restaurant }: Props) => {
